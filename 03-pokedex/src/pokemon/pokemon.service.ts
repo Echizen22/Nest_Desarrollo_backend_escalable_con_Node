@@ -23,6 +23,7 @@ export class PokemonService {
   ) {
 
     this.defaultLimit = configService.get<number>('defaultLimit');
+    // console.log({ defaultLimit: configService.get<number>('defaultLimit') });
 
   }
 
