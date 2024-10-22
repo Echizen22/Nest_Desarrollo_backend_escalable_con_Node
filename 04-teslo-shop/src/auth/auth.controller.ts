@@ -4,10 +4,12 @@ import { IncomingHttpHeaders } from 'http';
 
 import { AuthService } from './auth.service';
 import { RawHeaders, GetUser } from './decorators';
+import { RoleProtected } from './decorators/role-protected.decorator';
 
 import { CreateUserDto, LoginUserDto } from './dto';
 import { User } from './entities/user.entity';
 import { UserRoleGuard } from './guards/user-role.guard';
+import { ValidRoles } from './interfaces';
 
 @Controller('auth')
 export class AuthController {
@@ -47,8 +49,12 @@ export class AuthController {
   }
 
 
+
+  // @SetMetadata('roles', ['admin', 'super-user'])
+
+
   @Get('private2')
-  @SetMetadata('roles', ['admin', 'super-user'])
+  @RoleProtected( ValidRoles.superUser, ValidRoles.admin )
   @UseGuards( AuthGuard(), UserRoleGuard )
   privateRoute2(
     @GetUser() user: User
