@@ -5,6 +5,8 @@ import { ProductsService } from './../products/products.service';
 import { initialData } from './data/seed-data';
 import { User } from '../auth/entities/user.entity';
 
+import * as bycrypt  from "bcrypt";
+
 @Injectable()
 export class SeedService {
 
@@ -45,12 +47,18 @@ export class SeedService {
     const users: User[] = [];
 
     seedUsers.forEach( user => {
-      users.push( this.userRepository.create( user ) );
+
+      const { password, ...restUser } = user;
+      
+      users.push( this.userRepository.create({
+        ...restUser,
+        password: bycrypt.hashSync( password, 10),
+      }) );
     });
 
-    const dbUsers = await this.userRepository.save( seedUsers );
+    await this.userRepository.save( users );
 
-    return dbUsers[0];
+    return users[0];
   }
 
 
