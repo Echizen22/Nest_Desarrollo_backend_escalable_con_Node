@@ -56,9 +56,9 @@ export class SeedService {
       }) );
     });
 
-    await this.userRepository.save( users );
+    const dbUsers = await this.userRepository.save( users );
 
-    return users[0];
+    return dbUsers[0];
   }
 
 
