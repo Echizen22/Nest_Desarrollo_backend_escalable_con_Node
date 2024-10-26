@@ -63,7 +63,7 @@ const addListeners = ( socket: Socket ) => {
         const newMessage = `
             <li>
                 <strong>${ payload.fullName }</strong>
-                <strong>${ payload.message }</strong>
+                ${ payload.message }
             </li>
         `;
         const li = document.createElement('li');
